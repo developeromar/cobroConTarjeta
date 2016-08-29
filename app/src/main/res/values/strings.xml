@@ -8,4 +8,5 @@
     <string name="cvv">CVV</string>
     <string name="scan">escanera tarjeta</string>
     <string name="guardar">Guardar</string>
+    <string name="faltancampos">Faltan campos requeridos</string>
 </resources>

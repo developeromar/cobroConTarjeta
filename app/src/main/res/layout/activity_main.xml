@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
     android:paddingBottom="@dimen/activity_vertical_margin"
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    android:orientation="vertical"
     tools:context="com.desarrolladorandroid.cobrocontarjeta.MainActivity">
 
     <android.support.v7.widget.CardView
@@ -28,65 +28,65 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/primary"
-                android:textColor="@color/primary_light"
-                android:text="@string/titulo"
                 android:gravity="center"
-                android:textAppearance="?android:textAppearanceMedium"
-                android:paddingTop="5dp"
                 android:paddingBottom="5dp"
+                android:paddingTop="5dp"
+                android:text="@string/titulo"
+                android:textAppearance="?android:textAppearanceMedium"
+                android:textColor="@color/primary_light"
                 android:textStyle="bold"/>
             <EditText
+                android:id="@+id/noTarjeta"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textAppearance="?android:textAppearanceSmall"
                 android:layout_margin="5dp"
                 android:hint="@string/numeroTarjeta"
-                android:textColorHint="@color/accent"
-                android:id="@+id/noTarjeta"
-                android:inputType="numberDecimal"/>
+                android:inputType="numberDecimal"
+                android:textAppearance="?android:textAppearanceSmall"
+                android:textColorHint="@color/accent" />
             <EditText
+                android:id="@+id/nombre"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textAppearance="?android:textAppearanceSmall"
                 android:layout_margin="5dp"
                 android:hint="@string/nombre"
+                android:textAppearance="?android:textAppearanceSmall"
                 android:textColorHint="@color/accent"
-                android:id="@+id/nombre"
                 />
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
                 <EditText
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:textAppearance="?android:textAppearanceSmall"
-                    android:layout_margin="5dp"
-                    android:hint="@string/mes"
-                    android:textColorHint="@color/accent"
                     android:id="@+id/mes"
-                    android:inputType="numberDecimal"/>
-                <EditText
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:textAppearance="?android:textAppearanceSmall"
                     android:layout_margin="5dp"
-                    android:hint="@string/anio"
-                    android:textColorHint="@color/accent"
+                    android:layout_weight="1"
+                    android:hint="@string/mes"
+                    android:inputType="numberDecimal"
+                    android:textAppearance="?android:textAppearanceSmall"
+                    android:textColorHint="@color/accent" />
+                <EditText
                     android:id="@+id/anio"
-                    android:inputType="numberDecimal"/>
-                <EditText
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:textAppearance="?android:textAppearanceSmall"
                     android:layout_margin="5dp"
-                    android:hint="@string/cvv"
-                    android:textColorHint="@color/accent"
+                    android:layout_weight="1"
+                    android:hint="@string/anio"
+                    android:inputType="numberDecimal"
+                    android:textAppearance="?android:textAppearanceSmall"
+                    android:textColorHint="@color/accent" />
+                <EditText
                     android:id="@+id/cvv"
-                    android:inputType="numberDecimal"/>
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:layout_weight="1"
+                    android:hint="@string/cvv"
+                    android:inputType="numberDecimal"
+                    android:textAppearance="?android:textAppearanceSmall"
+                    android:textColorHint="@color/accent" />
             </LinearLayout>
         </LinearLayout>
 
@@ -95,8 +95,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="end"
-        android:text="@string/scan"
-        android:padding="5dp"
         android:background="@color/primary"
-        android:textColor="@color/primary_light"/>
+        android:onClick="onScanPress"
+        android:padding="5dp"
+        android:text="@string/scan"
+        android:textColor="@color/primary_light" />
 </LinearLayout>
