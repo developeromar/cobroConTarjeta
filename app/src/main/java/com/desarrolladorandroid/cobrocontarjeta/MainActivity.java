@@ -11,20 +11,30 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import org.json.JSONObject;
+
 import java.util.Arrays;
 import java.util.List;
 
 import io.card.payment.CardIOActivity;
 import io.card.payment.CreditCard;
+import io.conekta.conektasdk.Card;
+import io.conekta.conektasdk.Conekta;
+import io.conekta.conektasdk.Token;
 
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements Token.CreateToken {
     EditText numeroTarjeta, nombre, mes, anio, cvv;
     List<EditText> campos;
     int MY_SCAN_REQUEST_CODE = 0;
+    private String stringTarjeta;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if (savedInstanceState != null) {
+            stringTarjeta = savedInstanceState.getString("tarjeta");
+        }
         setContentView(R.layout.activity_main);
         numeroTarjeta = (EditText) findViewById(R.id.noTarjeta);
         nombre = (EditText) findViewById(R.id.nombre);
@@ -32,6 +42,8 @@ public class MainActivity extends AppCompatActivity {
         anio = (EditText) findViewById(R.id.anio);
         cvv = (EditText) findViewById(R.id.cvv);
         campos = Arrays.asList(numeroTarjeta, nombre, mes, anio, cvv);
+        Conekta.setPublicKey(BuildConfig.publicKeyConekta);
+        Conekta.collectDevice(this);
     }
 
     @Override
@@ -46,7 +58,15 @@ public class MainActivity extends AppCompatActivity {
 
         if (id == R.id.guardarmenu) {
             if (verificaContenido()) {
-                Toast.makeText(this, "campos correctos", Toast.LENGTH_SHORT).show();
+
+                stringTarjeta = stringTarjeta.replace(" ", "").trim();///se agrego esta linea para quitar los espacios por que si no no funciona
+                Card card = new Card(nombre.getText().toString(), stringTarjeta, cvv.getText().toString(),
+                        mes.getText().toString(), anio.getText().toString());
+
+                Token token = new Token(this);
+
+                token.onCreateTokenListener(this);
+                token.create(card);
 
             } else {
                 Toast.makeText(this, getString(R.string.faltancampos), Toast.LENGTH_SHORT).show();
@@ -94,8 +114,7 @@ public class MainActivity extends AppCompatActivity {
                 CreditCard scanResult = data.getParcelableExtra(CardIOActivity.EXTRA_SCAN_RESULT);
 
                 // Never log a raw card number. Avoid displaying it, but if necessary use getFormattedCardNumber()
-                resultDisplayStr = "Card Number: " + scanResult.getFormattedCardNumber() + "\n";
-                Log.d("numero de tarjeta", resultDisplayStr);
+                stringTarjeta = scanResult.getFormattedCardNumber() + "\n";
                 numeroTarjeta.setText(scanResult.getRedactedCardNumber());
                 // Do something with the raw number, e.g.:
                 // myService.setCardNumber( scanResult.cardNumber );
@@ -116,5 +135,23 @@ public class MainActivity extends AppCompatActivity {
             // resultTextView.setText(resultDisplayStr);
         }
         // else handle other activity results
+    }
+
+    @Override
+    public void onCreateTokenReady(JSONObject data) {
+        try {
+            //TODO: Create charge
+            Log.d("Token::::", data.getString("id"));
+            Toast.makeText(this, "Token Creado", Toast.LENGTH_SHORT).show();
+        } catch (Exception err) {
+            //TODO: Handle error
+            Log.d("Error: ", err.toString());
+        }
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        outState.putString("tarjeta", stringTarjeta);
+        super.onSaveInstanceState(outState);
     }
 }

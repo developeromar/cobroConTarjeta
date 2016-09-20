@@ -3,7 +3,7 @@
     package="com.desarrolladorandroid.cobrocontarjeta">
     <!-- Permission to vibrate - recommended, allows vibration feedback on scan -->
     <uses-permission android:name="android.permission.VIBRATE" />
-
+    <uses-permission android:name="android.permission.INTERNET" />
     <!-- Permission to use camera - required -->
     <uses-permission android:name="android.permission.CAMERA" />
 
