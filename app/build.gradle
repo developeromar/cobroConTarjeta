@@ -17,6 +17,9 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+    buildTypes.each {
+        it.buildConfigField('String', 'publicKeyConekta', conekta)
+    }
 }
 
 dependencies {
@@ -25,4 +28,5 @@ dependencies {
     compile 'com.android.support:cardview-v7:24.2.0'
     compile 'com.android.support:appcompat-v7:24.2.0'
     compile 'io.card:android-sdk:5.4.0'
+    compile 'io.conekta:conektasdk:2.0'
 }
